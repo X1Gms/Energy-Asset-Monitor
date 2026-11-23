@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/EnergyAssetMonitor.Api/EnergyAssetMonitor.Api.csproj" />
+    <Project Path="backend/EnergyAssetMonitor.Application/EnergyAssetMonitor.Application.csproj" />
+    <Project Path="backend/EnergyAssetMonitor.Domain/EnergyAssetMonitor.Domain.csproj" />
+    <Project Path="backend/EnergyAssetMonitor.Infrastructure/EnergyAssetMonitor.Infrastructure.csproj" />
+  </Folder>
+</Solution>
