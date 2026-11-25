@@ -1,0 +1,96 @@
+<div class="dashboard-layout">
+    <header class="top-header">
+        <div class="brand">
+            <span class="brand-icon"></span>
+            <h1>Energy Asset Monitor</h1>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary" (click)="loadAssets()">Atualizar</button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="kpi-grid">
+              <app-kpi-card
+                label="Total de Ativos"
+                [value]="kpis().totalAssets"
+                subtext="Centrais registadas" />
+            <app-kpi-card
+                label="Capacidade Instalada"
+                [value]="kpis().totalCapacityMW"
+                unit="MW"
+                subtext="Capacidade nominal global" />
+            <app-kpi-card
+                label="Produção Atual"
+                [value]="kpis().totalOutputMW"
+                unit="MW"
+                variant="emerald"
+                subtext="Potência instantânea na rede" />
+            <app-kpi-card
+                label="Estado Operacional"
+                [value]="kpis().operationalCount + ' / ' + kpis().totalAssets"
+                subtext="Centrais ativas sem anomalias" />
+        </section>
+
+        @if (errorMessage()){
+            <div class="alert alert-error">
+                <span>{{ errorMessage() }}</span>
+                <button class="btn btn-outline" (click)="loadAssets()">Tentar Novamente</button>
+            </div>
+        }
+
+        @if (isLoading()) {
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p>A comunicar com o servidor e carregar os dados...</p>
+            </div>
+        }
+
+        @if (!isLoading() && !errorMessage()) {
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>Lista de Ativos</h2>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nome da Central</th>
+                            <th>Tipo</th>
+                            <th>Localização</th>
+                            <th class="text-right">Capacidade</th>
+                            <th class="text-right">Produção Atual</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @for(asset of assets(); track asset.id){
+                            <tr>
+                                <td class="font-bold">{{ asset.name }}</td>
+                                <td>
+                                    <span class="type-pill">
+                                        @if (asset.type === 'Solar') {☀️}
+                                        @else if(asset.type === 'Wind') {💨}
+                                        @else{🔋}
+                                        {{ asset.type }}
+                                    </span>
+                                </td>
+                                <td>{{ asset.location }}</td>
+                                <td class="text-right font-mono">{{asset.installedCapacity}} MW</td>
+                                <td class="text-right font-mono font-bold">{{asset.currentOutput}} MW</td>
+                                <td>
+                                    <span class="status-badge" [ngClass]="asset.status.toLowerCase()">● {{ asset.status }}</span>
+                                </td>
+                                <td class="text-muted">{{asset.lastUpdate | date:'short'}}</td>
+                            </tr>
+                        }@empty {
+                            <tr>
+                                <td colspan="7" class="empty-state">Nenhum ativo encontrado.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </main>
+</div>

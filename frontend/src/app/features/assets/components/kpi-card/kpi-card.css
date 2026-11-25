@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+.kpi-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  height: 100%;
+}
+
+.kpi-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748B;
+}
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.kpi-value small {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #64748B;
+}
+
+.kpi-value.emerald {
+  color: #0C987A;
+}
+
+.kpi-subtext {
+  font-size: 0.8rem;
+  color: #94A3B8;
+}
